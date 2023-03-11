@@ -25,19 +25,19 @@ Matrix* matrix_eye(int n){
 }
 Matrix* matrix_zeros(int row, int col){
     Matrix* matrix=malloc(sizeof(Matrix));
-    matrix->row=n;
-    matrix->col=n;
+    matrix->row=row;
+    matrix->col=col;
     matrix->entries=malloc(sizeof(double*));
-    for(int i=0;i<n;i++){
-        for(int j=0;j<n;j++){
+    for(int i=0;i<matrix->row;i++){
+        for(int j=0;j<matrix->col;j++){
             matrix->entries[i][j]=(double)0.0;
         }
     }
     return matrix;
 }
 void matrix_print(Matrix* m){
-    row=m->row;
-    col=m->col;
+    int row=m->row;
+    int col=m->col;
     for(int i=0; i<row;i++){
         for(int j=0; j<col;j++){
             printf("%d ",m->entries[i][j]);
@@ -59,10 +59,10 @@ void matrix_save(Matrix* m, char* file_name){
 }
 void matrix_update(Matrix* m,double** entries){
     m->entries=entries;
-    return m;
+
 }
 Matrix* matrix_load(char* file_name){
-    FILE* file= fopen(file_string, "r");
+    FILE* file= fopen(file_name, "r");
     char entry[MAXCHAR];
     fgets(entry,MAXCHAR,file);
     int rows=atoi(entry);
@@ -76,7 +76,7 @@ Matrix* matrix_load(char* file_name){
         }
     }
     printf("Successfully loaded the matrix from %s\n",file_name);
-    fclose(file_name);
+    fclose(file);
     return m;
 }
 Matrix* matrix_flatten(Matrix* m, int axis){
@@ -89,6 +89,7 @@ Matrix* matrix_flatten(Matrix* m, int axis){
                 k+=1;
             }
         }
+    return m2;
     }
     else if(axis==0){
         Matrix* m2=matrix_zeros(1,m->row*m->col);
@@ -96,16 +97,17 @@ Matrix* matrix_flatten(Matrix* m, int axis){
         for(int i=0;i<m->row;i++){
             for(int j=0;j<m->col;j++){
                 m2->entries[0][k]=m->entries[i][j];
-                k+=1
+                k+=1;
             }
         }
-    }
     return m2;
+    }
+    
 }
-int* matrix_argmax(Matrix* m){
-    max=-1*INFINITY-1;
-    max_i=0;
-    max_j=0;
+int *matrix_argmax(Matrix* m){
+    double max=-1*INFINITY-1;
+    double max_i=0;
+    double max_j=0;
     for(int i=0;i<m->row;i++){
         for(int j=0;j<m->col;j++){
             if(m->entries[i][j]>max){

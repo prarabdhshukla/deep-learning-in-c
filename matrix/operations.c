@@ -75,7 +75,7 @@ Matrix* dot(Matrix* m1, Matrix* m2){
     }
 }
 
-Matrix* apply(double (func*)(double), Matrix* m){
+Matrix* apply(double (*func)(double), Matrix* m){
     Matrix* M=matrix_zeros(m->row,m->col);
     for(int i=0; i<M->row;i++){
         for(int j=0; j<M->col;j++)
@@ -85,7 +85,7 @@ Matrix* apply(double (func*)(double), Matrix* m){
 }
 Matrix* scale(double n, Matrix* m){
     Matrix* M=matrix_zeros(m->row, m->col);
-    for(int i =0; i<M->rowl;i++){
+    for(int i =0; i<M->row;i++){
         for(int j=0; j<M->col;j++)
         M->entries[i][j]=n*(m->entries[i][j]);
     }
@@ -93,14 +93,14 @@ Matrix* scale(double n, Matrix* m){
 }
 Matrix* addScalar(double n, Matrix* m){
     Matrix* M=matrix_zeros(m->row, m->col);
-    for(int i =0; i<M->rowl;i++){
+    for(int i =0; i<M->row;i++){
         for(int j=0; j<M->col;j++)
         M->entries[i][j]=n+(m->entries[i][j]);
     }
     return M;
 }
 Matrix* transpose(Matrix*m){
-    mT=matrix_zeros(m->col,m->row);
+    Matrix* mT=matrix_zeros(m->col,m->row);
     for(int i=0;i<m->col;i++){
         for(int j=0;j<m->row;j++)
         mT->entries[i][j]=m->entries[j][i];
