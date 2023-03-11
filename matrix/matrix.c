@@ -58,7 +58,10 @@ void matrix_save(Matrix* m, char* file_name){
     fclose(file);
 }
 void matrix_update(Matrix* m,double** entries){
-    m->entries=entries;
+    for(int i=0;i<m->row;i++){
+        for(int j=0;j<m->col;j++)
+        m->entries[i][j]=entries[i][j];
+    }
 
 }
 Matrix* matrix_load(char* file_name){
@@ -119,3 +122,4 @@ int *matrix_argmax(Matrix* m){
     int a[2]={max_i,max_j};
     return a;
 }
+
