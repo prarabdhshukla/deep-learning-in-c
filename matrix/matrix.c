@@ -12,7 +12,7 @@ Matrix* matrix_create(int row, int col, double** entries){
     return matrix;
 }
 Matrix* matrix_eye(int n){
-    Matrix* matrix=malloc(sizeof(matrix));
+    Matrix* matrix=malloc(sizeof(Matrix));
     matrix->row=n;
     matrix->col=n;
     matrix->entries=malloc(sizeof(double*));
@@ -24,7 +24,7 @@ Matrix* matrix_eye(int n){
     return matrix;
 }
 Matrix* matrix_zeros(int row, int col){
-    Matrix* matrix=malloc(sizeof(matrix));
+    Matrix* matrix=malloc(sizeof(Matrix));
     matrix->row=n;
     matrix->col=n;
     matrix->entries=malloc(sizeof(double*));
