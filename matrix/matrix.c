@@ -11,14 +11,33 @@ Matrix* matrix_create(int row, int col, double** entries){
     matrix->entries= entries;
     return matrix;
 }
+Matrix* matrix_ones(int row, int col){
+    Matrix* matrix=malloc(sizeof(Matrix));
+    matrix->row=row;
+    matrix->col=col;
+    matrix->entries=malloc(matrix->row*sizeof(double*));
+    for(int i=0;i<row;i++){
+        matrix->entries[i]=malloc(matrix->col*sizeof(double));
+        for(int j=0;j<col;j++){
+            matrix->entries[i][j]=(double)1.0;
+        }
+    }
+    return matrix;
+}
 Matrix* matrix_eye(int n){
     Matrix* matrix=malloc(sizeof(Matrix));
     matrix->row=n;
     matrix->col=n;
-    matrix->entries=malloc(sizeof(double*));
+    matrix->entries=malloc(matrix->row*sizeof(double*));
     for(int i=0;i<n;i++){
+        matrix->entries[i]=malloc(matrix->col*sizeof(double));
         for(int j=0;j<n;j++){
-            matrix->entries[i][j]=(double)1.0;
+            if(i==j){
+                matrix->entries[i][j]=(double)1.0;
+            }
+            else{
+                matrix->entries[i][j]=(double)0;
+            }
         }
     }
     return matrix;
@@ -27,8 +46,9 @@ Matrix* matrix_zeros(int row, int col){
     Matrix* matrix=malloc(sizeof(Matrix));
     matrix->row=row;
     matrix->col=col;
-    matrix->entries=malloc(sizeof(double*));
+    matrix->entries=malloc(row*sizeof(double*));
     for(int i=0;i<matrix->row;i++){
+        matrix->entries[i]=malloc(col*sizeof(double));
         for(int j=0;j<matrix->col;j++){
             matrix->entries[i][j]=(double)0.0;
         }
@@ -40,7 +60,7 @@ void matrix_print(Matrix* m){
     int col=m->col;
     for(int i=0; i<row;i++){
         for(int j=0; j<col;j++){
-            printf("%d ",m->entries[i][j]);
+            printf("%lf ",m->entries[i][j]);
         }
         printf("\n");
     } 
@@ -83,7 +103,7 @@ Matrix* matrix_load(char* file_name){
     return m;
 }
 Matrix* matrix_flatten(Matrix* m, int axis){
-    if(axis==1){
+    if(axis==0){
         Matrix* m2=matrix_zeros(m->row*m->col,1);
         int k=0;
         for(int i=0;i<m->row;i++){
@@ -94,7 +114,7 @@ Matrix* matrix_flatten(Matrix* m, int axis){
         }
     return m2;
     }
-    else if(axis==0){
+    else if(axis==1){
         Matrix* m2=matrix_zeros(1,m->row*m->col);
         int k=0;
         for(int i=0;i<m->row;i++){
@@ -107,19 +127,15 @@ Matrix* matrix_flatten(Matrix* m, int axis){
     }
     
 }
-int *matrix_argmax(Matrix* m){
+void matrix_argmax(Matrix* m,int* max_i, int* max_j){
     double max=-1*INFINITY-1;
-    double max_i=0;
-    double max_j=0;
     for(int i=0;i<m->row;i++){
         for(int j=0;j<m->col;j++){
             if(m->entries[i][j]>max){
-                max_i=i;
-                max_j=j;
+                *max_i=i;
+                *max_j=j;
             }
         }
     }
-    int a[2]={max_i,max_j};
-    return a;
 }
 

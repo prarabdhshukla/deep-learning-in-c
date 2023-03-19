@@ -8,6 +8,7 @@
 #include "../network/activations.h"
 
 
+
 Dense** NN_init(int input_size, int hidden, int* hidden_sizes, char** activations){
     Dense** layers=malloc(sizeof(Dense*)*hidden);
     for(int i=0; i<hidden;i++){
@@ -24,4 +25,9 @@ Dense** NN_init(int input_size, int hidden, int* hidden_sizes, char** activation
         layers[i]=layer;
     }
     return layers;
+}
+void NN_batch_train(Dense** layers, Matrix* batch){
+    for(int i=0;i<batch->row;i++){
+        Matrix* ex=matrix_zeros()
+    }
 }

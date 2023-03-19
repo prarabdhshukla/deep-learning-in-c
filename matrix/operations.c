@@ -1,8 +1,7 @@
+#include "operations.h"
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
-#include "operations.h"
-
 int check_dimensions(Matrix* m1, Matrix* m2){
     if(m1->col == m2->row)
     return 1;
@@ -103,7 +102,11 @@ Matrix* transpose(Matrix*m){
     Matrix* mT=matrix_zeros(m->col,m->row);
     for(int i=0;i<m->col;i++){
         for(int j=0;j<m->row;j++)
+        {
         mT->entries[i][j]=m->entries[j][i];
+        }
     }
     return mT;
 }
+
+
