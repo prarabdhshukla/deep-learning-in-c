@@ -30,4 +30,4 @@ typedef struct{
     layer** hidden_layers;
 }nn;
 
-nn* nn_init(int hidden, char** activations, char* loss_fn, int input_size, input_layer* iL, output_layer* oL, layer** hidden_layers);
+nn* nn_init(int hidden, char** activations, char* loss_fn, int input_size, int hidden_sizes[]);
